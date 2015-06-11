@@ -1,0 +1,10 @@
+{
+  "name": "DiamondExperiment",
+  "version": "0.0.0",
+  "description": "DiamondExperiment",
+  "main": "app.js",
+  "author": {
+    "name": "Chesheersky",
+    "email": ""
+  }
+}
