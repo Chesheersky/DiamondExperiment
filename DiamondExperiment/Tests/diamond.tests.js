@@ -1,15 +1,15 @@
 ﻿var assert = require('assert');
 var diamond = require('../Modules/diamond.js');
 
-suite('Diamond', function () {
-    describe('Basic case', function () {
+describe('Diamond', function () {
+    context('basic case', function () {
         it('should return A for A', function () {
             var result = diamond.produce('A');
             assert.equal(result, 'A');
         })
     })
     
-    describe('Upper part', function () {
+    context('upper part', function () {
         it('should have A for A-diamond', function () {
             var result = diamond.produce('A');
             var splitted = result.split('\n');
@@ -33,7 +33,7 @@ suite('Diamond', function () {
         })
     })
     
-    describe('Middle part', function () {
+    context('middle part', function () {
         it('should be A for A-diamond', function () {
             var result = diamond.produce('A');
             var splitted = result.split('\n');
@@ -56,7 +56,7 @@ suite('Diamond', function () {
         })
     })
     
-    describe('Lower part', function () {
+    context('lower part', function () {
         it('should have A for A-Diamond', function () {
             var result = diamond.produce('A');
             var splitted = result.split('\n');
@@ -80,7 +80,7 @@ suite('Diamond', function () {
         })
     })
     
-    describe('Complete result', function () {
+    context('complete result', function () {
         it('should be as predefined for A-diamond', function () {
             var result = diamond.produce('A');
             var splitted = result.split('\n');
