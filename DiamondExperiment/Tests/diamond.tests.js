@@ -1,5 +1,5 @@
 ﻿var assert = require('assert');
-var diamond = require('../Modules/Diamond.js');
+var diamond = require('../Modules/diamond.js');
 
 suite('Diamond', function () {
     describe('Basic case', function () {

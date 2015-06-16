@@ -31,8 +31,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
-    <Compile Include="Modules\Diamond.js" />
-    <Compile Include="Tests\MochaSuite.js">
+    <Compile Include="Modules\diamond.js" />
+    <Compile Include="Tests\diamond.tests.js">
       <SubType>Code</SubType>
       <TestFramework>Mocha</TestFramework>
     </Compile>
