@@ -1,111 +1,111 @@
 ﻿var assert = require('assert');
 var diamond = require('../Modules/Diamond.js');
 
-describe('Diamond', function() {
-    describe('Basic case', function (){
-        it('A returns A', function () {
+suite('Diamond', function () {
+    describe('Basic case', function () {
+        it('should return A for A', function () {
             var result = diamond.produce('A');
-            assert.ok(result === 'A', "The only row should be A");
+            assert.equal(result, 'A');
         })
     })
-
+    
     describe('Upper part', function () {
-        it('A-diamond has A in upper part', function () {
+        it('should have A for A-diamond', function () {
             var result = diamond.produce('A');
             var splitted = result.split('\n');
-
-            assert.ok(splitted[0] === 'A', "The only row should be A");
+            
+            assert.equal(splitted[0], 'A');
         })
-
-        it('B-diamond has A in upper part', function () {
+        
+        it('should have A for B-diamond', function () {
             var result = diamond.produce('B');
             var splitted = result.split('\n');
-
-            assert.ok(splitted[0] === ' A ', "The only row should be A");
+            
+            assert.equal(splitted[0], ' A ');
         })
-
-        it('C-diamond has two rows in upper part', function () {
+        
+        it('should have two rows for C-diamond', function () {
             var result = diamond.produce('C');
             var splitted = result.split('\n');
             
-            assert.ok(splitted[0] === '  A  ', "The only row should be A");
-            assert.ok(splitted[1] === ' B B ', "The only row should be A");
+            assert.equal(splitted[0], '  A  ');
+            assert.equal(splitted[1], ' B B ');
         })
     })
     
     describe('Middle part', function () {
-        it('A-diamond has A in middle part', function () {
+        it('should be A for A-diamond', function () {
             var result = diamond.produce('A');
             var splitted = result.split('\n');
             
-            assert.ok(splitted[0] === 'A', "The only row should be A");
+            assert.equal(splitted[0], 'A');
         })
         
-        it('B-diamond has B B in middle part', function () {
+        it('should have B B for B-diamond', function () {
             var result = diamond.produce('B');
             var splitted = result.split('\n');
             
-            assert.ok(splitted[1] === 'B B', "The only row should be A");
+            assert.equal(splitted[1], 'B B');
         })
         
-        it('C-diamond has C   C in middle part', function () {
+        it('should have C   C for C-diamond', function () {
             var result = diamond.produce('C');
             var splitted = result.split('\n');
             
-            assert.ok(splitted[2] === 'C   C', "The only row should be C   C");
+            assert.equal(splitted[2], 'C   C');
         })
     })
     
     describe('Lower part', function () {
-        it('A-diamond has A in lower part', function () {
+        it('should have A for A-Diamond', function () {
             var result = diamond.produce('A');
             var splitted = result.split('\n');
             
-            assert.ok(splitted[0] === 'A', "The only row should be A");
+            assert.equal(splitted[0], 'A');
         })
         
-        it('B-diamond has A in lower part', function () {
+        it('should have A for B-Diamond', function () {
             var result = diamond.produce('B');
             var splitted = result.split('\n');
             
-            assert.ok(splitted[2] === ' A ', "The only row should be A");
+            assert.equal(splitted[2], ' A ');
         })
         
-        it('C-diamond has two rows in lower part', function () {
+        it('should have two rows for C-Diamond', function () {
             var result = diamond.produce('C');
             var splitted = result.split('\n');
             
-            assert.ok(splitted[3] === ' B B ', "The only row should be B B");
-            assert.ok(splitted[4] === '  A  ', "The only row should be A");
+            assert.equal(splitted[3], ' B B ');
+            assert.equal(splitted[4], '  A  ');
         })
     })
     
-    describe('Upper part', function () {
-        it('A-diamond has A in upper part', function () {
+    describe('Complete result', function () {
+        it('should be as predefined for A-diamond', function () {
             var result = diamond.produce('A');
             var splitted = result.split('\n');
             
-            assert.ok(splitted[0] === 'A', "The only row should be A");
+            assert.equal(splitted[0], 'A');
         })
         
-        it('B-diamond has A in upper part', function () {
+        it('should be as predefined for B-diamond', function () {
             var result = diamond.produce('B');
             var splitted = result.split('\n');
             
-            assert.ok(splitted[0] === ' A ', "The only row should be A");
-            assert.ok(splitted[1] === 'B B', "The only row should be B B");
-            assert.ok(splitted[2] === ' A ', "The only row should be A");
+            assert.equal(splitted[0], ' A ');
+            assert.equal(splitted[1], 'B B');
+            assert.equal(splitted[2], ' A ');
         })
         
-        it('C-diamond has two rows in upper part', function () {
+        it('should be as predefined for C-diamond', function () {
             var result = diamond.produce('C');
             var splitted = result.split('\n');
             
-            assert.ok(splitted[0] === '  A  ', "The only row should be A");
-            assert.ok(splitted[1] === ' B B ', "The only row should be B B");
-            assert.ok(splitted[2] === 'C   C', "The only row should be C   C");
-            assert.ok(splitted[3] === ' B B ', "The only row should be B B");
-            assert.ok(splitted[4] === '  A  ', "The only row should be A");
+            assert.equal(splitted[0], '  A  ');
+            assert.equal(splitted[1], ' B B ');
+            assert.equal(splitted[2], 'C   C');
+            assert.equal(splitted[3], ' B B ');
+            assert.equal(splitted[4], '  A  ');
         })
     })
 })

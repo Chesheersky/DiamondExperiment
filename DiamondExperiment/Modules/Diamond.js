@@ -1,10 +1,8 @@
-﻿var Diamond = function () { };
-
-String.prototype.replaceAt = function (index, character) {
+﻿String.prototype.replaceAt = function (index, character) {
     return this.substr(0, index) + character + this.substr(index + character.length);
 }
 
-Diamond.prototype.produce = function (char) {
+module.exports.produce = function (char) {
     var base = 'A'.charCodeAt(0);
     var charCode = char.charCodeAt(0);
     var shift = charCode - base;
@@ -32,5 +30,3 @@ Diamond.prototype.produce = function (char) {
     
     return result.join('\n');
 };
-
-module.exports = new Diamond();
