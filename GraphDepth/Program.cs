@@ -11,24 +11,19 @@ namespace GraphDepth
     {
         public int CalculateMinimalGraphDepth(Graph graphy)
         {
-            var min = int.MaxValue;
-            foreach (var verty in graphy.Vertexes)
+            var minDepth = 0;
+
+            while(graphy.Vertexes.Count > 1)
             {
-                graphy.ResetMarks();
-                CalculateVertDepth(verty, 0);
-                var max = graphy.Vertexes.Max(x => x.Mark);
-                min = (max < min) ? max : min;
+                Console.WriteLine("Count: {0} Minimal Depth: {1}", graphy.Vertexes.Count, minDepth);
+                foreach (var verty in graphy.Vertexes)
+                    if (verty.Related.Count < 2)
+                        verty.MarkedForDeletion = true;
+                graphy.Shake();
+                minDepth++;
             }
 
-            return min;
-        }
-
-        private void CalculateVertDepth(Vertex verty, int mark)
-        {
-            verty.Mark = mark;
-
-            foreach (var related in verty.Related.Where(x => x.Mark > mark))
-                CalculateVertDepth(related, mark + 1);
+            return minDepth;
         }
     }
 
@@ -37,21 +32,15 @@ namespace GraphDepth
         public Vertex()
         {
             Related = new List<Vertex>();
-            Reset();
         }
 
         public List<Vertex> Related { get; set; }
         public int Id { get; set; }
-        public int Mark { get; set; }
+        public bool MarkedForDeletion { get; set; }
 
         public void Bind(Vertex other)
         {
             Related.Add(other);
-        }
-
-        internal void Reset()
-        {
-            Mark = int.MaxValue;
         }
     }
 
@@ -95,10 +84,19 @@ namespace GraphDepth
             return result;
         }
 
-        internal void ResetMarks()
+        internal void Shake()
         {
-            foreach (var vertex in Vertexes)
-                vertex.Reset();
+            var marked = Vertexes.Where(v => v.MarkedForDeletion).ToArray();
+            foreach (var vertex in marked)
+                RemoveVertex(vertex);
+        }
+
+        private void RemoveVertex(Vertex vertex)
+        {
+            foreach(var related in vertex.Related)
+                related.Related.Remove(vertex);
+
+            Vertexes.Remove(vertex);
         }
     }
 
