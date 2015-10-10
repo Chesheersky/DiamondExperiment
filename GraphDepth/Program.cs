@@ -13,13 +13,17 @@ namespace GraphDepth
         {
             var minDepth = 0;
 
-            while(graphy.Vertexes.Count > 1)
+            while (graphy.Vertexes.Count > 1)
             {
                 Console.WriteLine("Count: {0} Minimal Depth: {1}", graphy.Vertexes.Count, minDepth);
-                foreach (var verty in graphy.Vertexes)
-                    if (verty.Related.Count < 2)
-                        verty.MarkedForDeletion = true;
-                graphy.Shake();
+
+                var markedForDeletion = graphy.Vertexes
+                                              .Where(v => v.Value.Count() < 2)
+                                              .Select(v => v.Key)
+                                              .ToArray();
+                foreach (var marked in markedForDeletion)
+                    graphy.RemoveVertex(marked);
+
                 minDepth++;
             }
 
@@ -27,31 +31,14 @@ namespace GraphDepth
         }
     }
 
-    class Vertex
-    {
-        public Vertex()
-        {
-            Related = new List<Vertex>();
-        }
-
-        public List<Vertex> Related { get; set; }
-        public int Id { get; set; }
-        public bool MarkedForDeletion { get; set; }
-
-        public void Bind(Vertex other)
-        {
-            Related.Add(other);
-        }
-    }
-
     class Graph
     {
         public Graph()
         {
-            Vertexes = new List<Vertex>();
+            Vertexes = new Dictionary<int, List<int>>();
         }
 
-        public List<Vertex> Vertexes
+        public Dictionary<int, List<int>> Vertexes
         {
             get;
             set;
@@ -63,38 +50,24 @@ namespace GraphDepth
             int xi = int.Parse(vs[0]); // the ID of a person which is adjacent to yi
             int yi = int.Parse(vs[1]); // the ID of a person which is adjacent to xi
 
-            var X = GetVertex(xi);
-            var Y = GetVertex(yi);
-
-            BindVertexes(X, Y);
+            AddEdge(xi, yi);
         }
 
-        private void BindVertexes(Vertex X, Vertex Y)
+        private void AddEdge(int xi, int yi)
         {
-            X.Bind(Y);
-            Y.Bind(X);
+            if (!Vertexes.ContainsKey(xi))
+                Vertexes[xi] = new List<int>();
+            Vertexes[xi].Add(yi);
+
+            if (!Vertexes.ContainsKey(yi))
+                Vertexes[yi] = new List<int>();
+            Vertexes[yi].Add(xi);
         }
 
-        private Vertex GetVertex(int xi)
+        public void RemoveVertex(int vertex)
         {
-            var result = Vertexes.FirstOrDefault(x => x.Id == xi);
-            if (result == null)
-                Vertexes.Add(result = new Vertex { Id = xi });
-
-            return result;
-        }
-
-        internal void Shake()
-        {
-            var marked = Vertexes.Where(v => v.MarkedForDeletion).ToArray();
-            foreach (var vertex in marked)
-                RemoveVertex(vertex);
-        }
-
-        private void RemoveVertex(Vertex vertex)
-        {
-            foreach(var related in vertex.Related)
-                related.Related.Remove(vertex);
+            foreach (var related in Vertexes[vertex])
+                Vertexes[related].Remove(vertex);
 
             Vertexes.Remove(vertex);
         }
