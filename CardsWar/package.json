@@ -1,0 +1,10 @@
+{
+  "name": "CardsWar",
+  "version": "0.0.0",
+  "description": "CardsWar",
+  "main": "app.js",
+  "author": {
+    "name": "Chesheersky",
+    "email": ""
+  }
+}
