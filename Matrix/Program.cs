@@ -130,6 +130,15 @@ namespace Matrix
         }
     }
 
+    class Variant
+    {
+        public Variant()
+        {
+            Ways=new Dictionary<Node, int>();
+        }
+        public Dictionary<Node, int> Ways{get;set;}
+    }
+
     [Serializable()]
     class Graph
     {
