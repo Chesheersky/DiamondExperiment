@@ -66,30 +66,35 @@ namespace Matrix
 
         private Graph BuildTheBase()
         {
-            var initialGraph = new Graph();
+            var initial = new Graph();
+
+            initial.Nodes.AddRange(GetInitial());
+            SolveObvious(initial, hope);
+            return initial;
+        }
+
+        private static void SolveObvious(Graph graph)
+        {
             var hope = true;
 
-            initialGraph.Nodes.AddRange(GetInitial());
-
-            while (hope && !initialGraph.IsComplete())
+            while (hope && !graph.IsComplete())
             {
                 hope = false;
-                foreach (var node in initialGraph.Nodes)
+                foreach (var node in graph.Nodes)
                 {
-                    var available = initialGraph.GetAvailable(node);
+                    var available = graph.GetAvailable(node);
                     if (node.IsPerfect(available))
                     {
                         foreach (var an in available)
                         {
                             while (an.HungerFor(node) > 0
                                 && node.Hunger > 0)
-                                initialGraph.Connect(node, an);
+                                graph.Connect(node, an);
                         }
                         hope = true;
                     }
                 }
-            }
-            return initialGraph;
+            }=
         }
 
         public static Graph DeepClone(Graph obj)
@@ -108,8 +113,22 @@ namespace Matrix
 
         private Graph Dig(Graph theBase)
         {
-            var copy = DeepClone(theBase);
-            return copy;
+
+            foreach (var node in theBase.Nodes)
+            {
+                var variants = GetVariants(node);
+                foreach (var variant in variants)
+                {
+                    var copy = DeepClone(theBase);
+                    var result = Dig(copy);
+                    if (result == null)
+                        continue;
+                    SolveObious(result);
+                    if (result.IsComplete)
+                        return result;
+                }
+            }
+
         }
 
         public void FindSolutions()
@@ -134,9 +153,9 @@ namespace Matrix
     {
         public Variant()
         {
-            Ways=new Dictionary<Node, int>();
+            Ways = new Dictionary<Node, int>();
         }
-        public Dictionary<Node, int> Ways{get;set;}
+        public Dictionary<Node, int> Ways { get; set; }
     }
 
     [Serializable()]
